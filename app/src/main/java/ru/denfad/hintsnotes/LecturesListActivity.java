@@ -34,6 +34,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +52,10 @@ public class LecturesListActivity extends AppCompatActivity {
     public List<String> lectures = new ArrayList<>();
     public ImageButton addLecture;
     public ArrayAdapter adapter;
+    public ImageButton tosett;
+    public TextView textxml;
+    final String themefile = "themefile";
+    final String msgfile = "msgfile";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +63,80 @@ public class LecturesListActivity extends AppCompatActivity {
 
         listView= findViewById(R.id.lecture_list);
         addLecture=findViewById(R.id.addLecture);
+        tosett = findViewById(R.id.toSettings);
+        textxml = findViewById(R.id.text1);
+
+
+
+
+        final ConstraintLayout view = (ConstraintLayout) findViewById(R.id.settings_layout);
+
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(themefile)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (themefile.toString()=="light") {
+            view.setBackgroundResource(R.drawable.fon_zadn_svetl);
+            textxml.setTextColor(getResources().getColor(R.color.grey));
+
+        }
+        else {
+            view.setBackgroundResource(R.drawable.fon_zadn);
+            textxml.setTextColor(getResources().getColor(R.color.white));
+
+        }
+
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(msgfile)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (msgfile.toString()==null) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    R.string.hint1, Toast.LENGTH_LONG);
+            toast.show();
+
+            try {
+                // отрываем поток для записи
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                        openFileOutput(msgfile, MODE_PRIVATE)));
+                // пишем данные
+                bw.write("whatever");
+                // закрываем поток
+                bw.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        else {
+        }
+
 
 
 
@@ -96,6 +180,15 @@ public class LecturesListActivity extends AppCompatActivity {
                 openSiteEditDialog();
             }
         });
+        tosett.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(),RLSettingsActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+
     }
 
     private void openSiteDeleteDialog(final String lectureName) {
@@ -229,6 +322,7 @@ public class LecturesListActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

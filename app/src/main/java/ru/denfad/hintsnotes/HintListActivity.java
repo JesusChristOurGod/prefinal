@@ -18,10 +18,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.gson.GsonBuilder;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,11 +44,89 @@ public class HintListActivity extends AppCompatActivity {
     public SharedPreferences sharedPreferences;
     public String hints;
     public String savingListHint;
+    final String themefile = "themefile";
+    final String msgfile = "msgfile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hint_list);
+
+        final ConstraintLayout view = (ConstraintLayout) findViewById(R.id.settings_layout);
+
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(themefile)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (themefile.toString()=="light") {
+            view.setBackgroundResource(R.drawable.fon_zadn_svetl);
+
+        }
+        else {
+            view.setBackgroundResource(R.drawable.fon_zadn);
+
+
+        }
+
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(msgfile)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (msgfile.toString()==null) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    R.string.hint2, Toast.LENGTH_LONG);
+            toast.show();
+
+            Toast toast1 = Toast.makeText(getApplicationContext(),
+                    R.string.hint3, Toast.LENGTH_LONG);
+            toast1.show();
+
+            try {
+                // отрываем поток для записи
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                        openFileOutput(msgfile, MODE_PRIVATE)));
+                // пишем данные
+                bw.write("whatever");
+                // закрываем поток
+                bw.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        else {
+        }
+
+
+
+
+
         Intent intent = getIntent();
         savingListHint = intent.getStringExtra("savingListHint");
         Log.i("Get lecture", savingListHint);

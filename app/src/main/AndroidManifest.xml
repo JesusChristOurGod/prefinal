@@ -16,6 +16,9 @@
         <activity android:name=".HintListActivity">
 
         </activity>
+        <activity android:name=".RLSettingsActivity">
+
+        </activity>
         <activity android:name=".SettingsActivity">
 
         </activity>

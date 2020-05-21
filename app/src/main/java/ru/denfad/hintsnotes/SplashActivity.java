@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class SplashActivity extends Activity {
 
@@ -26,3 +32,4 @@ public class SplashActivity extends Activity {
         }, SPLASH_DISPLAY_LENGTH);
     }
 }
+

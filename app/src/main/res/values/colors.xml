@@ -4,6 +4,10 @@
 <color name="colorPrimaryDark">#FF5722</color>
 <color name="colorAccent">#F99606</color>
     <color name="colorBack">#F99606</color>
+    <color name="yellow">#FFF000</color>
+    <color name="white"> #FFFFFF</color>
+    <color name="black"> #000000</color>
     <color name="divider">#00FF9800</color>
+    <color name="grey">#282828</color>
 </resources>
 

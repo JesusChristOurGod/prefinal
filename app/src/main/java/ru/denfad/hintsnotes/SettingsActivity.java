@@ -3,6 +3,7 @@ package ru.denfad.hintsnotes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +13,25 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import ru.denfad.hintsnotes.dao.hintDao;
 import ru.denfad.hintsnotes.models.Hint;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -27,16 +44,49 @@ public class SettingsActivity extends AppCompatActivity {
     public ImageButton addButton;
     public boolean newHint=false;
     public String savingListHint;
+    final String themefile = "themefile";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-
-
         editTitle = findViewById(R.id.editTitle);
         editTime = findViewById(R.id.editTime);
         editHintText = findViewById(R.id.editHintText);
+        final ConstraintLayout view = (ConstraintLayout) findViewById(R.id.settings_layout);
+
+            try {
+                // открываем поток для чтения
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        openFileInput(themefile)));
+                String str = "";
+                // читаем содержимое
+                while ((str = br.readLine()) != null) {
+
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (themefile.toString()=="light") {
+                view.setBackgroundResource(R.drawable.fon_zadn_svetl);
+                editTitle.setTextColor(getResources().getColor(R.color.grey));
+                editTime.setTextColor(getResources().getColor(R.color.grey));
+                editHintText.setTextColor(getResources().getColor(R.color.grey));
+            }
+            else {
+                view.setBackgroundResource(R.drawable.fon_zadn);
+                editTitle.setTextColor(getResources().getColor(R.color.white));
+                editTime.setTextColor(getResources().getColor(R.color.white));
+                editHintText.setTextColor(getResources().getColor(R.color.white));
+            }
+
+
+
+
+
 
         final Intent intent = this.getIntent();
         int position = intent.getIntExtra("hint",Integer.MAX_VALUE);

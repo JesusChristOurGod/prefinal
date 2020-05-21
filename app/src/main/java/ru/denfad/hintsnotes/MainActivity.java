@@ -16,9 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.GsonBuilder;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import ru.denfad.hintsnotes.dao.hintDao;
 import ru.denfad.hintsnotes.models.Hint;
@@ -57,6 +63,31 @@ public class MainActivity extends AppCompatActivity {
         timerText2 = findViewById(R.id.timerDisplay2);
         piece1 = findViewById(R.id.piece);
         piece2 = findViewById(R.id.ll1);
+        final String themefile = "themefile";
+
+        final ConstraintLayout view = (ConstraintLayout) findViewById(R.id.mainlayout);
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(themefile)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (themefile.toString()=="light") {
+            view.setBackgroundResource(R.drawable.fon_zadn_svetl);
+            textDisplay.setTextColor(getResources().getColor(R.color.grey));
+        }
+        else {
+            view.setBackgroundResource(R.drawable.fon_zadn);
+            textDisplay.setTextColor(getResources().getColor(R.color.white));
+        }
 
 
         //проверка на запущенность таймера
