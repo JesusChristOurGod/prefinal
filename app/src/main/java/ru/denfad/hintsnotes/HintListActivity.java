@@ -121,7 +121,7 @@ public class HintListActivity extends AppCompatActivity {
 
         }
         else {
-        }
+        } //ащар
 
 
 
